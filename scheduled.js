@@ -57,7 +57,7 @@ bot.on("message", (message) => {
 						}
 						else {
 							try {
-								message.reply("You must specify the name of a salon\n\n" + help);
+								message.reply("You must specify a channel \n\n" + help);
 							}
 							catch(e) {
 
