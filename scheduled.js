@@ -8,7 +8,7 @@ var scheduledMessages = new Array();
 var help = "Help :\n``*schedule [date] [time] [channel] [message]``\n\nSchedule a delayed sending of a message.\nThe date and time must be in the following format ``YYYY-MM-DD HH:mm:SS``";
 
 bot.on("ready", () => {
-	console.log("Bot démarré");
+	console.log("Bot started");
 });
 
 setInterval(function() {
