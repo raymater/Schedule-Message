@@ -71,7 +71,7 @@ Or if you want to run the script continuously in the background, you should to u
 forever start scheduled.js
 ```
 
-## Using the bot (commands) :**
+## Using the bot (commands) :
 
 Schedule a delayed sending of a message :
 ```
