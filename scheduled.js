@@ -15,7 +15,7 @@ if(config.token == undefined) {
 }
 
 var token = config.token;
-var lang = en;
+var lang = "en";
 var translate = null;
 
 if(config.lang != undefined) {
