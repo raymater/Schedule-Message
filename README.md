@@ -73,18 +73,18 @@ forever start scheduled.js
 
 ## Using the bot (commands) :
 
-Schedule a delayed sending of a message :
+**Schedule a delayed sending of a message :**
 ```
 *schedule [date] [time] [channel] [message]
 ```
 *- The date and time must be in the following format ``YYYY-MM-DD HH:mm:SS``*
 
-List of scheduled messages :
+**List of scheduled messages :**
 ```
 *schedulelist
 ```
 
-Delete an existing message by its id :
+**Delete an existing message by its id :**
 ```
 *scheduledelete [id]
 ```
