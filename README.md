@@ -23,7 +23,6 @@ git clone https://github.com/raymater/Schedule-Message.git
 Install Discord.js :
 ```
 npm install discord.js
-
 ```
 Install ini :
 ```
