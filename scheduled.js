@@ -119,10 +119,10 @@ bot.on("message", (message) => {
 								var idMessage = Math.random().toString(36).substring(3);
 
 								var resp = translate.confirm_schedule;
-								resp = resp.replaceAll("{idMessage}" , idMessage);
-								resp = resp.replaceAll("{channel}" , command[3]);
-								resp = resp.replaceAll("{date}" , command[1]);
-								resp = resp.replaceAll("{time}" , command[2]);
+								resp = resp.replace("{idMessage}" , idMessage);
+								resp = resp.replace("{channel}" , command[3]);
+								resp = resp.replace("{date}" , command[1]);
+								resp = resp.replace("{time}" , command[2]);
 
 								message.reply(resp);
 
@@ -237,7 +237,7 @@ bot.on("message", (message) => {
 						});
 						try {
 							var rr = translate.confirm_delete;
-							rr = rr.replaceAll("{idMessage}" , command[1]);
+							rr = rr.replace("{idMessage}" , command[1]);
 							message.reply(rr);
 						}
 						catch(e) {
