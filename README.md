@@ -1,5 +1,5 @@
 # Schedule-Message
-A Discord bot writted by raymater : schedule a message to be sent.
+A Discord bot written by raymater : schedule a message to be sent.
 
 ## Dependencies
 This bot works with [Node.js](https://nodejs.org/)
