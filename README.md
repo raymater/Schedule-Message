@@ -70,3 +70,22 @@ Or if you want to run the script continuously in the background, you should to u
 ```
 forever start scheduled.js
 ```
+
+## Using the bot (commands) :**
+
+Schedule a delayed sending of a message :
+```
+*schedule [date] [time] [channel] [message]
+```
+*- The date and time must be in the following format ``YYYY-MM-DD HH:mm:SS``*
+
+List of scheduled messages :
+```
+*schedulelist
+```
+
+Delete an existing message by its id :
+```
+*scheduledelete [id]
+```
+*- You can get ID of messages by using ``*schedulelist`` command.*
