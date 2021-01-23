@@ -82,7 +82,7 @@ bot.on("message", (message) => {
 						if(command[3].startsWith("<#")) {
 							try {
 								var idMessage = Math.random().toString(36).substring(3);
-								message.reply("Your message has been scheduled to be published in the channel " + command[3] + " on " + command[1] + " at " + command[2] + " !");
+								message.reply("Your message (ID : **" + idMessage + "**) has been scheduled to be published in the channel " + command[3] + " on " + command[1] + " at " + command[2] + " !");
 								var n = message.content.replace(command[0] + " " + command[1] + " " + command[2] + " " + command[3] + " ",'');
 								var m = {id:idMessage, date:d, message:n, channel:command[3], instance:message, author:message.author.username, server:message.guild.id};
 								scheduledMessages.push(m);
