@@ -1,4 +1,5 @@
 var Discord = require("discord.js");
+var fs = require('fs');
 var bot = new Discord.Client();
 
 var token = "...PUT YOUR BOT TOKEN HERE...";
@@ -9,6 +10,35 @@ var help = "Help :\n``*schedule [date] [time] [channel] [message]``\n\nSchedule 
 
 bot.on("ready", () => {
 	console.log("Bot started");
+	fs.readFile('./messages.json', 'utf8', function(err, data){
+    	if(err) {
+			console.log("Error on reading file messages.json : " + err);
+		}
+		else {
+			try {
+				var t = JSON.parse(data);
+				var newList = new Array();
+				for(var i = 0; i < t.length; i++) {
+					t[i].date = new Date(t[i].date);
+					var today = new Date();
+					if(t[i].date.getTime() > today.getTime()) {
+						newList.push(t[i]);
+					}
+				}
+				scheduledMessages = newList;
+				var txt = JSON.stringify(scheduledMessages);
+				fs.writeFile("./messages.json", txt, function (err) {
+					if (err) {
+						console.log("Error on writing file messages.json : " + err);
+					}
+				});
+				console.log("Scheduled messages imported from messages.json");
+			}
+			catch(e) {
+				scheduledMessages = new Array();
+			}
+		}
+	});
 });
 
 setInterval(function() {
@@ -28,6 +58,12 @@ setInterval(function() {
 	}
 	if(removeItem != -1) {
 		scheduledMessages.splice(removeItem, 1);
+		var txt = JSON.stringify(scheduledMessages);
+		fs.writeFile("./messages.json", txt, function (err) {
+			if (err) {
+				console.log("Error on writing file messages.json : " + err);
+			}
+		});
 	}
 }, 350);
 
@@ -50,6 +86,12 @@ bot.on("message", (message) => {
 								var n = message.content.replace(command[0] + " " + command[1] + " " + command[2] + " " + command[3] + " ",'');
 								var m = {id:idMessage, date:d, message:n, channel:command[3], instance:message, author:message.author.username, server:message.guild.id};
 								scheduledMessages.push(m);
+								var txt = JSON.stringify(scheduledMessages);
+								fs.writeFile("./messages.json", txt, function (err) {
+									if (err) {
+										console.log("Error on writing file messages.json : " + err);
+									}
+								});
 							}
 							catch(e) {
 	
@@ -144,6 +186,12 @@ bot.on("message", (message) => {
 				else {
 					if(scheduledMessages[found].server == message.guild.id) {
 						scheduledMessages.splice(found, 1);
+						var txt = JSON.stringify(scheduledMessages);
+						fs.writeFile("./messages.json", txt, function (err) {
+							if (err) {
+									console.log("Error on writing file messages.json : " + err);
+							}
+						});
 						try {
 							message.reply("The message with ID **" + command[1] + "**  has been removed from the list :ok_hand:");
 						}
