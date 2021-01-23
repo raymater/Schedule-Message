@@ -7,6 +7,7 @@ This bot works with [Node.js](https://nodejs.org/)
 You need to have these libraries :
 * **[Discord.js](https://discord.js.org/)**
 * **[FS](https://nodejs.org/api/fs.html)** - included in Node.js
+* **[ini](https://www.npmjs.com/package/ini)**
 * **[forever](https://www.npmjs.com/package/forever)** - recommanded
 
 ## Get started
@@ -18,9 +19,15 @@ You need to have these libraries :
 git clone https://github.com/raymater/Schedule-Message.git
 ```
 
-**3- Install [Discord.js](https://discord.js.org/) library :**
+**3- Install libraries :**
+Install Discord.js :
 ```
 npm install discord.js
+
+```
+Install ini :
+```
+npm i ini
 ```
 
 (Recommanded) Install [forever](https://www.npmjs.com/package/forever) library :
@@ -37,7 +44,8 @@ npm install forever -g
 * Click on "New Application" button, enter your bot name and confirm.
 * Click on "Bot" tab, then on "Add bot" button and confirm.
 * In the "Token" section, click on "Copy" button.
-* Edit the schedule.js file in line 5 and paste your token in quotes.
+* Edit the config.ini file and paste your token.
+* (optional) - Edit the config.ini file and set your language (language code are same as translate files)
 
 
 **6- Invite your bot in a Discord server :**

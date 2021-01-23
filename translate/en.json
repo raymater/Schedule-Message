@@ -1,0 +1,13 @@
+{
+    "message_help" : "Help :\n``*schedule [date] [time] [channel] [message]``\n\nSchedule a delayed sending of a message.\nThe date and time must be in the following format ``YYYY-MM-DD HH:mm:SS``",
+    "confirm_schedule" : "Your message (ID : **{idMessage}**) has been scheduled to be published in the channel {channel} on {date} at {time} ! :ok_hand:",
+    "error_channel" : "You must specify a channel \n\n",
+    "date_time_later" : "The date/time must be later than the current date/time\n\n",
+    "date_time_invalid" : "Invalid date / time format\n\n",
+    "list_message" : "**List of scheduled messages :**\n\n",
+    "from_message" : "from",
+    "in_message" : "in",
+    "message_not_found" : "This message could not be found. List of messages : ``*schedulelist``",
+    "help_delete" : "Help :\n``*scheduledelete [id]``\n\nDelete an existing message by its id. List of messages : ``*schedulelist``",
+    "confirm_delete" : "The message with ID **{idMessage}** has been removed from the list :ok_hand:"
+}

@@ -1,18 +1,53 @@
 var Discord = require("discord.js");
 var fs = require('fs');
+var ini = require('ini');
 var bot = new Discord.Client();
 
-var token = "...PUT YOUR BOT TOKEN HERE...";
+if(fs.existsSync("./config.ini") === false) {
+	console.log("ERROR : config.ini file doesn't exist or unreadable.");
+	process.exit(1);
+}
+
+var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
+if(config.token == undefined) {
+	console.log("ERROR : You must to specify the \"token\" parameter in config.ini file.");
+	process.exit(1);
+}
+
+var token = config.token;
+var lang = en;
+var translate = null;
+
+if(config.lang != undefined) {
+	lang = config.lang;
+}
+else {
+	console.log("WARNING : \"lang\" parameter is not specified in your config.ini file, so the default language is set to \"en\"");
+}
+
+if(fs.existsSync("./translate/" + config.lang + '.json') === false) {
+	console.log("ERROR : ./translate/" + config.lang + ".json file doesn't exist or unreadable.");
+	process.exit(1);
+}
+else {
+	try {
+		translate = JSON.parse(fs.readFileSync("./translate/" + config.lang + '.json', 'utf-8'));
+	}
+	catch(e) {
+		console.log("ERROR : JSON parse error in ./translate/" + config.lang + ".json file : " + e);
+		process.exit(1);
+	}
+}
 
 var scheduledMessages = new Array();
 
-var help = "Help :\n``*schedule [date] [time] [channel] [message]``\n\nSchedule a delayed sending of a message.\nThe date and time must be in the following format ``YYYY-MM-DD HH:mm:SS``";
+var help = translate.message_help;
 
 bot.on("ready", () => {
-	console.log("Bot started");
+	console.log("INFO : Bot started");
 	fs.readFile('./messages.json', 'utf8', function(err, data){
     	if(err) {
-			console.log("Error on reading file messages.json : " + err);
+			console.log("ERROR : Error on reading file messages.json : " + err);
 		}
 		else {
 			try {
@@ -29,10 +64,10 @@ bot.on("ready", () => {
 				var txt = JSON.stringify(scheduledMessages);
 				fs.writeFile("./messages.json", txt, function (err) {
 					if (err) {
-						console.log("Error on writing file messages.json : " + err);
+						console.log("ERROR : Error on writing file messages.json : " + err);
 					}
 				});
-				console.log("Scheduled messages imported from messages.json");
+				console.log("INFO : Scheduled messages imported from messages.json");
 			}
 			catch(e) {
 				scheduledMessages = new Array();
@@ -61,7 +96,7 @@ setInterval(function() {
 		var txt = JSON.stringify(scheduledMessages);
 		fs.writeFile("./messages.json", txt, function (err) {
 			if (err) {
-				console.log("Error on writing file messages.json : " + err);
+				console.log("ERROR : Error on writing file messages.json : " + err);
 			}
 		});
 	}
@@ -82,14 +117,22 @@ bot.on("message", (message) => {
 						if(command[3].startsWith("<#")) {
 							try {
 								var idMessage = Math.random().toString(36).substring(3);
-								message.reply("Your message (ID : **" + idMessage + "**) has been scheduled to be published in the channel " + command[3] + " on " + command[1] + " at " + command[2] + " !");
+
+								var resp = translate.confirm_schedule;
+								resp = resp.replaceAll("{idMessage}" , idMessage);
+								resp = resp.replaceAll("{channel}" , command[3]);
+								resp = resp.replaceAll("{date}" , command[1]);
+								resp = resp.replaceAll("{time}" , command[2]);
+
+								message.reply(resp);
+
 								var n = message.content.replace(command[0] + " " + command[1] + " " + command[2] + " " + command[3] + " ",'');
 								var m = {id:idMessage, date:d, message:n, channel:command[3], instance:message, author:message.author.username, server:message.guild.id};
 								scheduledMessages.push(m);
 								var txt = JSON.stringify(scheduledMessages);
 								fs.writeFile("./messages.json", txt, function (err) {
 									if (err) {
-										console.log("Error on writing file messages.json : " + err);
+										console.log("ERROR : Error on writing file messages.json : " + err);
 									}
 								});
 							}
@@ -99,7 +142,7 @@ bot.on("message", (message) => {
 						}
 						else {
 							try {
-								message.reply("You must specify a channel \n\n" + help);
+								message.reply(translate.error_channel + help);
 							}
 							catch(e) {
 
@@ -108,7 +151,7 @@ bot.on("message", (message) => {
 					}
 					else {
 						try {
-							message.reply("The date/time must be later than the current date/time\n\n" + help);
+							message.reply(translate.date_time_later + help);
 						}
 						catch(e) {
 
@@ -117,7 +160,7 @@ bot.on("message", (message) => {
 				}
 				else {
 					try{
-						message.reply("Invalid date / time format\n\n" + help);
+						message.reply(translate.date_time_invalid + help);
 					}
 					catch(e) {
 
@@ -138,7 +181,7 @@ bot.on("message", (message) => {
 	if(message.content.startsWith("*schedulelist") === true)
 	{
 		if(message.member.roles.highest.permissions.has("ADMINISTRATOR") === true || message.member.roles.highest.permissions.has("MANAGE_CHANNELS") === true) {
-			var resp = "List of scheduled messages :\n\n";
+			var resp = translate.list_message;
 
 			for(var i = 0; i < scheduledMessages.length; i++) {
 				if(scheduledMessages[i].server == message.guild.id) {
@@ -151,7 +194,7 @@ bot.on("message", (message) => {
 
 					var stringFullDate = scheduledMessages[i].date.getFullYear() + "-" + pad(scheduledMessages[i].date.getMonth() + 1) + "-" + pad(scheduledMessages[i].date.getDate()) + " " + pad(scheduledMessages[i].date.getHours()) + ":" + pad(scheduledMessages[i].date.getMinutes()) + ":" + pad(scheduledMessages[i].date.getSeconds());
 
-					resp += "- ID: **" + scheduledMessages[i].id + "** from *" + scheduledMessages[i].author + "*, in " + scheduledMessages[i].channel + " (" + stringFullDate + ") :\n" + scheduledMessages[i].message.slice(0, 50) + "...\n\n";
+					resp += "- ID: **" + scheduledMessages[i].id + "** " + translate.from_message + " *" + scheduledMessages[i].author + "*, " + translate.in_message + " " + scheduledMessages[i].channel + " (" + stringFullDate + ") :\n" + scheduledMessages[i].message.slice(0, 50) + "...\n\n";
 				}
 			}
 
@@ -177,7 +220,7 @@ bot.on("message", (message) => {
 				}
 				if(found === false) {
 					try {
-						message.reply("This message could not be found. List of messages : ``*schedulelist``");
+						message.reply(translate.message_not_found);
 					}
 					catch(e) {
 
@@ -189,11 +232,13 @@ bot.on("message", (message) => {
 						var txt = JSON.stringify(scheduledMessages);
 						fs.writeFile("./messages.json", txt, function (err) {
 							if (err) {
-									console.log("Error on writing file messages.json : " + err);
+									console.log("ERROR : Error on writing file messages.json : " + err);
 							}
 						});
 						try {
-							message.reply("The message with ID **" + command[1] + "**  has been removed from the list :ok_hand:");
+							var rr = translate.confirm_delete;
+							rr = rr.replaceAll("{idMessage}" , command[1]);
+							message.reply(rr);
 						}
 						catch(e) {
 
@@ -201,7 +246,7 @@ bot.on("message", (message) => {
 					}
 					else {
 						try {
-							message.reply("This message could not be found. List of messages : ``*schedulelist``");
+							message.reply(translate.message_not_found);
 						}
 						catch(e) {
 
@@ -211,7 +256,7 @@ bot.on("message", (message) => {
 			}
 			else {
 				try {
-					message.reply("Help :\n``*scheduledelete [id]``\n\nDelete an existing message by its id. List of messages : ``*schedulelist``");
+					message.reply(translate.help_delete);
 				}
 				catch(e) {
 

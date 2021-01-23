@@ -1,0 +1,13 @@
+{
+    "message_help" : "Aide :\n``*schedule [date] [time] [channel] [message]``\n\nProgramme un envoi différé d'un message.\nLa date et l'heure doivent être au format suivant : ``YYYY-MM-DD HH:mm:SS``",
+    "confirm_schedule" : "Votre message (ID : **{idMessage}**) a été programmé pour être publié dans le salon {channel} le {date} à {time} ! :ok_hand:",
+    "error_channel" : "Vous devez spécifier un salon \n\n",
+    "date_time_later" : "La date/heure doit être postérieure à la date/heure actuelle\n\n",
+    "date_time_invalid" : "Format date/heure invalide\n\n",
+    "list_message" : "**Liste des messages programmés :**\n\n",
+    "from_message" : "par",
+    "in_message" : "dans",
+    "message_not_found" : "Ce message est introuvable. Liste des messages : ``*schedulelist``",
+    "help_delete" : "Aide :\n``*scheduledelete [id]``\n\nSupprime un message existant par son id. Liste des messages : ``*schedulelist``",
+    "confirm_delete" : "Le message ayant pour ID **{idMessage}** a été retiré de la liste :ok_hand:"
+}
