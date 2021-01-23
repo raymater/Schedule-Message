@@ -138,7 +138,7 @@ bot.on("message", (message) => {
 	if(message.content.startsWith("*schedulelist") === true)
 	{
 		if(message.member.roles.highest.permissions.has("ADMINISTRATOR") === true || message.member.roles.highest.permissions.has("MANAGE_CHANNELS") === true) {
-			var reponse = "List of scheduled messages :\n\n";
+			var resp = "List of scheduled messages :\n\n";
 
 			for(var i = 0; i < scheduledMessages.length; i++) {
 				if(scheduledMessages[i].server == message.guild.id) {
@@ -151,12 +151,12 @@ bot.on("message", (message) => {
 
 					var stringFullDate = scheduledMessages[i].date.getFullYear() + "-" + pad(scheduledMessages[i].date.getMonth() + 1) + "-" + pad(scheduledMessages[i].date.getDate()) + " " + pad(scheduledMessages[i].date.getHours()) + ":" + pad(scheduledMessages[i].date.getMinutes()) + ":" + pad(scheduledMessages[i].date.getSeconds());
 
-					reponse += "- ID: **" + scheduledMessages[i].id + "** from *" + scheduledMessages[i].author + "*, in " + scheduledMessages[i].channel + " (" + stringFullDate + ") :\n" + scheduledMessages[i].message.slice(0, 50) + "...\n\n";
+					resp += "- ID: **" + scheduledMessages[i].id + "** from *" + scheduledMessages[i].author + "*, in " + scheduledMessages[i].channel + " (" + stringFullDate + ") :\n" + scheduledMessages[i].message.slice(0, 50) + "...\n\n";
 				}
 			}
 
 			try {
-				message.reply(reponse);
+				message.reply(resp);
 			}
 			catch(e) {
 
