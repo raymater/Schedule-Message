@@ -1,6 +1,10 @@
 # Schedule-Message
 A Discord bot written by raymater : schedule a message to be sent.
 
+## Invite the bot in your Discord Server !
+This is an instance of Schedule-Message bot ready to use :
+(https://discord.com/api/oauth2/authorize?client_id=802637509523406898&permissions=84992&scope=bot)
+
 ## Dependencies
 This bot works with [Node.js](https://nodejs.org/)
 
