@@ -76,6 +76,7 @@ forever start scheduled.js
 ```
 
 ## Using the bot (commands) :
+*Only channel managers and administrators can use these commands !*
 
 **Schedule a delayed sending of a message :**
 ```
