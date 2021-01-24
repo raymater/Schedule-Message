@@ -9,5 +9,6 @@
     "in_message" : "dans",
     "message_not_found" : "Ce message est introuvable. Liste des messages : ``*schedulelist``",
     "help_delete" : "Aide :\n``*scheduledelete [id]``\n\nSupprime un message existant par son id. Liste des messages : ``*schedulelist``",
-    "confirm_delete" : "Le message ayant pour ID **{idMessage}** a été retiré de la liste :ok_hand:"
+    "confirm_delete" : "Le message ayant pour ID **{idMessage}** a été retiré de la liste :ok_hand:",
+    "confirm_clear" : "Tous les messages programmés ont été supprimés avec succès ! :ok_hand:"
 }

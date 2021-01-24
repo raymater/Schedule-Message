@@ -9,5 +9,6 @@
     "in_message" : "in",
     "message_not_found" : "This message could not be found. List of messages : ``*schedulelist``",
     "help_delete" : "Help :\n``*scheduledelete [id]``\n\nDelete an existing message by its id. List of messages : ``*schedulelist``",
-    "confirm_delete" : "The message with ID **{idMessage}** has been removed from the list :ok_hand:"
+    "confirm_delete" : "The message with ID **{idMessage}** has been removed from the list :ok_hand:",
+    "confirm_clear" : "All of schedule messages are removed successfully ! :ok_hand:"
 }

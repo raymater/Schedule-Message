@@ -265,6 +265,31 @@ bot.on("message", (message) => {
 		}
 	}
 
+	if(message.content.startsWith("*scheduleclear") === true)
+	{
+		if(message.member.roles.highest.permissions.has("ADMINISTRATOR") === true || message.member.roles.highest.permissions.has("MANAGE_CHANNELS") === true) {
+			var newList = new Array();
+			for(var i = 0; i < scheduledMessages.length; i++) {
+				if(scheduledMessages[i].server != message.guild.id) {
+					newList = scheduledMessages[i];
+				}
+			}
+			scheduledMessages = newList;
+			var txt = JSON.stringify(scheduledMessages);
+			fs.writeFile("./messages.json", txt, function (err) {
+				if (err) {
+						console.log("ERROR : Error on writing file messages.json : " + err);
+				}
+			});
+			try {
+				message.reply(translate.confirm_clear);
+			}
+			catch(e) {
+
+			}
+		}
+	}
+
 });
 
 bot.login(token);

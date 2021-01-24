@@ -94,3 +94,8 @@ forever start scheduled.js
 *scheduledelete [id]
 ```
 *- You can get ID of messages by using ``*schedulelist`` command.*
+
+**Clear all of scheduled messages :**
+```
+*scheduleclear
+```
